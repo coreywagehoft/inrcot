@@ -134,7 +134,7 @@ For each feed (1 inReach = 1 feed, multiple feeds supported), these config param
 * **COT_TYPE**: CoT Type. Default: ``a-f-g-e-s``
 * **COT_NAME**: CoT Callsign. Defaults to the MapShare KML Placemark name.
 * **COT_ICON**: CoT User Icon. If set, will set the CoT ``usericon`` element, for use with custom TAK icon sets.
-* **FEED_USERNAME**: MapShare username, for use with protected MapShare.
+* **FEED_USERNAME**: MapShare username, for use with protected MapShare. MapShare currently ignores this value. If unspecified a default value is set.
 * **FEED_PASSWORD**: MapShare password, for use with protected MapShare.
 
 TLS & other configuration parameters available via `PyTAK <https://github.com/ampledata/pytak#configuration-parameters>`_.
@@ -147,6 +147,20 @@ An example config::
 
     [inrcot]
     COT_URL = tcp://takserver.example.com:8088
+    POLL_INTERVAL = 120
+
+    [inrcot_feed_aaa]
+    FEED_URL = https://share.garmin.com/Feed/Share/aaa
+
+An example config with certificate authentication, after creating the certificates with ``/opt/tak/certs/makeCert.sh client inrcot`` on the TAK server::
+
+    [inrcot]
+    COT_URL = tls://takserver.example.com:8089
+    PYTAK_TLS_CLIENT_CERT = /etc/inrcot/inrcot.pem
+    PYTAK_TLS_CLIENT_KEY = /etc/inrcot/inrcot.key
+    PYTAK_TLS_CLIENT_PASSWORD = atakatak
+    PYTAK_TLS_CLIENT_CAFILE = /etc/inrcot/inrcot-trusted.pem
+    PYTAK_TLS_DONT_CHECK_HOSTNAME = 1
     POLL_INTERVAL = 120
 
     [inrcot_feed_aaa]
@@ -175,7 +189,7 @@ Individual feeds CoT output can be customized as well::
     COT_TYPE = a-f-G-U-C
     COT_STALE = 600
     COT_NAME = Team Lead
-    COT_ICON = my_package/team_lead.png
+    COT_ICON = ad78aafb-83a6-4c07-b2b9-a897a8b6a38f/Shapes/placemark_circle.png
 
 Protected feeds are also supported::
 
