@@ -66,7 +66,7 @@ setuptools.setup(
     author_email="oss@undef.net",
     package_data={"": ["LICENSE"]},
     license="Apache License, Version 2.0",
-    long_description=read_readme(),
+    long_description=read_readme() if os.path.exists("README.rst") else "",
     long_description_content_type="text/x-rst",
     zip_safe=False,
     include_package_data=True,
@@ -88,4 +88,5 @@ setuptools.setup(
         "iTAK",
         "TAK Server",
     ],
+    python_requires='>=3.6',
 )
